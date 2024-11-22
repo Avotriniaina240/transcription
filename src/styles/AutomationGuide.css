@@ -1,471 +1,181 @@
-/* Variables globales */
-:root {
-    --primary-color: #0ea5e9;
-    --primary-hover: #0284c7;
-    --secondary-color: #64748b;
-    --success-color: #10b981;
-    --background-color: #f8fafc;
-    --card-background: #ffffff;
-    --border-radius: 12px;
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-  }
-  
-  /* Styles de base */
-  body {
-    background-color: var(--background-color);
-    font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    color: #1e293b;
-    line-height: 1.5;
-  }
-  
-  .container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1.5rem;
-  }
-  
-  h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    text-align: center;
-    color: #1e293b;
-    margin-bottom: 3rem;
-    line-height: 1.2;
-  }
-
-  .api-status {
-    font-size: 12px;
-    color: #00ff80;
-    font-weight: bold;
-  }
-  
-  /* Navigation des étapes */
-  .steps {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 4rem;
-    position: relative;
-    gap: 1rem;
-  }
-  
-  .steps::before {
-    content: '';
-    position: absolute;
-    top: 2rem;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: #e2e8f0;
-    z-index: 0;
-  }
-  
-  .step {
-    flex: 1;
-    text-align: center;
-    position: relative;
-    z-index: 1;
-    background: var(--background-color);
-    padding: 0 1rem;
-  }
-  
-  .step-number {
-    width: 4rem;
-    height: 4rem;
-    background: white;
-    border: 2px solid #e2e8f0;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem;
-    font-weight: 600;
-    color: var(--secondary-color);
-    transition: all 0.3s ease;
-  }
-  
-  .step.active .step-number {
-    background: #78c786;
-    border-color: #78c786;
-    color: white;
-    transform: scale(1.1);
-  }
-  
-  .step.completed .step-number {
-    background: var(--success-color);
-    border-color: var(--success-color);
-    color: white;
-  }
-  
-  .step-title {
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-    color: #1e293b;
-  }
-  
-  .step-subtitle {
-    font-size: 0.875rem;
-    color: var(--secondary-color);
-  }
-  
-  /* Cartes des services */
-  .prerequisites-page {
-    padding: 2rem 0;
-  }
-  
-  .services {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-  
-  .service-card {
-    background: var(--card-background);
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-lg);
-  }
-  
-  .service-header {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .service-icon {
-    font-size: 2rem;
-  }
-  
-  .service-name {
-    font-size: 1.25rem;
-    font-weight: 600;
-  }
-  
-  .requirements {
-    margin-bottom: 1.5rem;
-  }
-  
-  .requirement {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-  
-  .check {
-    color: var(--success-color);
-    font-weight: bold;
-  }
-
-  label {
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 12px;
+.installation-guide-wrapper {
+  display: grid;
+  grid-template-columns: minmax(300px, 1fr) minmax(300px, 1fr);
+  gap: 20px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  font-family: 'Arial', sans-serif;
+  margin-top: 3.5%; 
 }
-  
-  /* Boutons */
-  .action-button {
-    width: 100%;
-    padding: 0.75rem 1.5rem;
-    border-radius: var(--border-radius);
-    border: none;
-    background: var(--primary-color);
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  .action-button:hover {
-    background: var(--primary-hover);
-    transform: translateY(-2px);
-  }
-  
-  .action-button.configured {
-    background: var(--success-color);
-  }
-  
-/* Page des limitations */
-.limitations-content {
-    max-width: 800px;
-    margin: 0 auto;
-  }
-  
-  .limitations-container {
-    display: flex;
-    justify-content: space-between; /* Espacement entre les cartes */
-    gap: 20px; /* Espacement entre les cartes */
-  }
-  
-  .limitation-card {
-    background: var(--card-background);
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    margin-bottom: 0; /* Supprimer la marge du bas pour éviter l'espacement supplémentaire */
-    box-shadow: var(--shadow-md);
-    flex: 1; /* Chaque carte prendra une part égale de l'espace */
-  }
-  
-  .limitation-card h3 {
-    color: var(--primary-color);
-    margin-bottom: 1.5rem;
-    font-size: 1.25rem;
-  }
-  
-  .limitation-card ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .limitation-card li {
-    display: flex;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-  }
-  
-  .limitation-icon {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-  }
-  
-  .limitation-detail strong {
-    display: block;
-    margin-bottom: 0.25rem;
-  }
-  
-  
-  /* Page d'installation */
-  .installation-step {
-    background: var(--card-background);
-    border-radius: var(--border-radius);
-    padding: 2rem;
-    margin-bottom: 2rem;
-    display: flex;
-    gap: 2rem;
-    box-shadow: var(--shadow-md);
-    transition: transform 0.3s ease;
-  }
-  
-  .installation-step:hover {
-    transform: translateX(5px);
-  }
-  
-  .step-number {
-    width: 3rem;
-    height: 3rem;
-    background: var(--primary-color);
-    color: white;
-    border-radius: 50%;
-    font-size: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-    flex-shrink: 0;
-  }
-  
-  .step-content h3 {
-    margin-bottom: 0.75rem;
-    color: #1e293b;
-  }
-  
-  .connection-status {
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
-    margin-top: 1rem;
-  }
-  
-  .status-item {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    background: #f1f5f9;
-    padding: 0.75rem 1rem;
-    border-radius: var(--border-radius);
-  }
-  
-  /* Navigation */
-  .navigation-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 3rem;
-    padding-top: 2rem;
-    border-top: 1px solid #e2e8f0;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    transition: all 0.2s ease;
-  }
 
-  .previous-button  {
-    padding: 0.75rem 2rem;
-    border-radius: var(--border-radius);
-    border: none;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #ffffff;
-    background-color: #074464;
-  }
-  
-  .next-button  {
-    padding: 0.75rem 2rem;
-    border-radius: var(--border-radius);
-    border: none;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: #ffffff;
-    background-color: #074464;
-  }
-  
-  .next-button.prev,
-  .previous-button.prev {
-    background: #f1f5f9;
-    color: var(--secondary-color);
-  }  
-  
-/* Boutons actifs */
-.next-button.next,
-.previous-button.prev {
-  background: var(--primary-color);
+.installation-guide-sidebar {
+  background-color: #f0f4f8;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.installation-guide-main-content {
+  padding: 40px;
+  background-color: #f6f8f9;
+  display: flex;
+  flex-direction: column;
+}
+
+.features-section {
+  margin-top: 30px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  background-color: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+}
+
+.feature-icon {
+  font-size: 2.5rem;
+  margin-right: 20px;
+}
+
+.feature-item h3 {
+  margin-bottom: 5px;
+  color: #2c3e50;
+}
+
+.feature-item p {
+  color: #7f8c8d;
+  font-size: 0.9rem;
+}
+
+.additional-info {
+  margin-top: 18px;
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.additional-info ol {
+  padding-left: 20px;
+}
+
+.additional-info li {
+  margin-bottom: 10px;
+  color: #34495e;
+}
+
+/* Style amélioré pour le sélecteur de langue */
+.installation-guide-language-select {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 2px solid #bdc3c7;
+  border-radius: 8px;
+  color: #2c3e50;
+  cursor: pointer;
+  transition: border-color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.installation-guide-language-select:hover {
+  border-color: #3498db;
+  background-color: #ecf0f1;
+}
+
+.installation-guide-language-select:focus {
+  border-color: #2980b9;
+}
+
+/* Style amélioré pour la sélection de fichier */
+.installation-guide-file-upload {
+  padding: 90px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: rgb(84, 76, 76);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
+  border: 2px dotted #3498db; 
+  border-radius: 8px; 
+}
+
+
+.installation-guide-file-upload:active {
+  transform: scale(0.98);
+}
+
+/* Style amélioré pour le bouton Transcrire */
+.installation-guide-btn {
+  padding: 15px 20px;
+  margin-top: 20px;
+  font-size: 1rem;
+  font-weight: bold;
   color: white;
+  background-color: #279aae;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease-in-out, transform 0.2s;
 }
 
-/* Effet hover pour les deux boutons, sauf si désactivé */
-.next-button:hover:not(:disabled),
-.previous-button:hover:not(:disabled) {
-  transform: translateY(-2px);
+.installation-guide-btn:hover {
+  background-color: #0e6877;
 }
 
-/* Boutons désactivés */
-.next-button:disabled,
-.previous-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.installation-guide-btn:active {
+  background-color: #279aae;
+  transform: scale(0.98);
 }
-  
-  /* Animations */
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  
-  .prerequisites-page,
-  .limitations-page,
-  .installation-page {
-    animation: fadeIn 0.5s ease;
-  }
-  
-  /* Media Queries */
-  @media (max-width: 768px) {
-    .steps {
-      flex-direction: column;
-      gap: 2rem;
-    }
-  
-    .steps::before {
-      display: none;
-    }
-  
-    .installation-step {
-      flex-direction: column;
-      gap: 1rem;
-    }
-  
-    .next-button {
-      padding: 0.75rem 1rem;
-    }
 
-    .previous-button {
-        padding: 0.75rem 1rem;
-      }
-  }
+/* Effet 1 : Bordure animée */
+.file-upload-success {
+  border: 2px solid #4b8e9d !important;
+  background-color: rgba(76, 175, 80, 0.1) !important;
+  transition: all 0.3s ease;
+  animation: pulse-success 1.5s infinite;
+}
 
-  .checkbox-container label {
-    color: #4791ef;
-  }
-  
-  .checkbox-container input:checked + label {
-    color: #63af6e;
-  }
+@keyframes pulse-success {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+  100% { transform: scale(1); }
+}
 
-  .checkbox-container input[type="checkbox"]:checked {
-    accent-color: green;
-  }
+/* Effet 2 : Gradient de fond */
+.file-upload-gradient {
+  background: linear-gradient(90deg, #e0f7fa, #b2ebf2) !important;
+  color: #00796b !important;
+  transition: all 0.5s ease;
+}
 
-  .api-status {
-    font-size: 12px;
-    font-weight: bold;
-  }
-  
-  .api-status.configured {
-    color: #01ab56;
-  }
-  
-  .api-status.not-configured {
-    color: #ff0000; /* Rouge */
-  }
-  
-  .installation-steps {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px; /* Espace entre les deux éléments */
-  }
-  
-  .installation-step {
-    flex: 1;
-    padding: 20px;
-    background-color: var(--card-background);
-    border-radius: 1rem;
-    padding: 2rem;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, background-color 0.3s ease;
-  }
-  
-  .step-content {
-    margin-left: 10px;
-  }
-  
-  .step-actions {
-    margin-top: 10px;
-  }
-  
-  .action-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .action-button.loading {
-    background-color: #6c757d;
-  }
-  
-  .action-button.disabled {
-    background-color: #ddd;
-    cursor: not-allowed;
-  }
-  
-  
-  
+/* Effet 3 : Ombre colorée */
+.file-upload-shadow {
+  box-shadow: 0 0 15px rgba(76, 175, 80, 0.5) !important;
+  border: 2px solid #4CAF50 !important;
+  transition: all 0.3s ease;
+}
+
+/* Effet 4 : Effet de clignotement doux */
+.file-upload-blink {
+  animation: blink-animation 1.5s infinite;
+  border: 2px solid #2196F3 !important;
+}
+
+@keyframes blink-animation {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Effet 5 : Effet 3D */
+.file-upload-3d {
+  transform: perspective(500px) rotateX(5deg);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}

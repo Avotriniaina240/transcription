@@ -1,129 +1,187 @@
-import React, { useState, useEffect } from 'react';
-import { Prerequisites } from './Prerequisites';
-import { Limitations } from './Limitations';
-import { Installation } from './Installation';
-import { STEPS, MAKE_API_KEY, BLUEPRINT_ID } from '../../config/constants';
-import { MakeService } from '../../services/MakeService';
+import React, { useState, useRef } from 'react';
+import { Upload, Music, Video } from 'lucide-react'; // Ajout des icônes Music et Video
 import '../../styles/AutomationGuide.css';
 
+const TranscriptionApp = () => {
+    const [file, setFile] = useState(null);
+    const [transcription, setTranscription] = useState('');
+    const [language, setLanguage] = useState('fr');
+    const [loading, setLoading] = useState(false);
+    const fileInputRef = useRef(null);
 
-const InstallationGuide = () => {
-  const [currentStep, setCurrentStep] = useState(1);
-  const [configuredServices, setConfiguredServices] = useState({
-    'Make.com': false,
-    'AssemblyAI': false,
-    'OneDrive': false
-  });
+    const handleFileUpload = (event) => {
+        const uploadedFile = event.target.files[0];
 
-  useEffect(() => {
-    if (!MAKE_API_KEY || !BLUEPRINT_ID) {
-      console.warn('Make.com API configuration missing');
-    }
-  }, []);
+        if (uploadedFile && (uploadedFile.type.startsWith('audio/') || uploadedFile.type.startsWith('video/'))) {
+            setFile(uploadedFile);
+            setTranscription('');
+        } else {
+            alert("Veuillez sélectionner un fichier audio ou vidéo valide.");
+        }
+    };
 
-  const handleServiceConfig = (serviceName) => {
-    setConfiguredServices(prev => ({
-      ...prev,
-      [serviceName]: !prev[serviceName]
-    }));
-  };
+    const handleTranscription = async () => {
+        if (!file) {
+            alert("Veuillez d'abord sélectionner un fichier.");
+            return;
+        }
 
-  const allServicesConfigured = Object.values(configuredServices).every(value => value);
-  
-  const handleNext = () => {
-    if (currentStep < STEPS.length) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('language', language);
 
-  const handlePrevious = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
+        try {
+            setLoading(true);
+            setTranscription('Transcription en cours...');
+            
+            const response = await fetch('http://localhost:5678/webhook-test/705e1646-0eb3-4577-9c37-bb08d032b085', {
+                method: 'POST',
+                body: formData
+            });
 
-  const handleFinish = async () => {
-    try {
-      await MakeService.testAutomation();
-      alert('Installation terminée ! L\'automatisation est prête à être utilisée.');
-    } catch (error) {
-      alert('Erreur lors de la finalisation : ' + error.message);
-    }
-  };
+            if (!response.ok) {
+                throw new Error('Erreur lors de la transcription');
+            }
 
-  const renderStep = () => {
-    switch (currentStep) {
-      case 1:
-        return (
-          <Prerequisites 
-            configuredServices={configuredServices}
-            onServiceConfig={handleServiceConfig}
-          />
-        );
-      case 2:
-        return <Limitations />;
-      case 3:
-        return <Installation />;
-      default:
-        return null;
-    }
-  };
+            const result = await response.json();
+            
+            setTranscription(result.transcription || 'Transcription terminée');
+            
+            setTimeout(() => {
+                setTranscription('');
+                setFile(null);
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                }
+            }, 3000);
 
-  return (
-    <div className="container">
-      <h1>Guide d'Installation - Automatisation de Transcription</h1>
-      <div className="steps">
-        {STEPS.map((step) => (
-          <div
-            key={step.number}
-            className={`step ${currentStep === step.number ? 'active' : ''}`}
-          >
-            <div className="step-number">{step.number}</div>
-            <div className="step-details">
-              <div className="step-title">{step.title}</div>
-              <div className="step-subtitle">{step.subtitle}</div>
+        } catch (error) {
+            console.error('Erreur de transcription:', error);
+            setTranscription('Échec de la transcription');
+            
+            setTimeout(() => {
+                setTranscription('');
+                setFile(null);
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                }
+            }, 3000);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const LoadingSpinner = () => (
+        <div className="loading-spinner">
+            <div className="spinner"></div>
+        </div>
+    );
+
+    const getFileUploadClass = () => {
+        if (!file) return "installation-guide-file-upload";
+        return `installation-guide-file-upload file-upload-success file-upload-gradient`;
+    };
+
+    const getIconForFile = () => {
+        if (!file) return <Upload className="mr-2 h-5 w-5" />;
+        if (file.type.startsWith('audio/')) return <Music className="mr-2 h-5 w-5" />;
+        if (file.type.startsWith('video/')) return <Video className="mr-2 h-5 w-5" />;
+    };
+
+    const languageOptions = [
+        { code: 'fr', name: 'Français' },
+        { code: 'en', name: 'Anglais' },
+        { code: 'es', name: 'Espagnol' },
+        { code: 'de', name: 'Allemand' }
+    ];
+
+    return (
+        <div className="installation-guide-wrapper">
+            <div className="installation-guide-sidebar">
+                <h2>Auto-Transcript</h2>
+                <select 
+                    className="installation-guide-language-select"
+                    value={language}
+                    onChange={(e) => setLanguage(e.target.value)}
+                >
+                    {languageOptions.map(option => (
+                        <option key={option.code} value={option.code}>
+                            {option.name}
+                        </option>
+                    ))}
+                </select>
+
+                <div className="features-section">
+                    <div className="feature-item">
+                        <div className="feature-icon">🌐</div>
+                        <div>
+                            <h3>Multi-Langues</h3>
+                            <p>Transcription dans plusieurs langues</p>
+                        </div>
+                    </div>
+                    <div className="feature-item">
+                        <div className="feature-icon">⭐</div>
+                        <div>
+                            <h3>Haute Précision</h3>
+                            <p>Intelligence artificielle de pointe</p>
+                        </div>
+                    </div>
+                    <div className="feature-item">
+                        <div className="feature-icon">⏱️</div>
+                        <div>
+                            <h3>Rapide</h3>
+                            <p>Transcription en quelques instants</p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        ))}
-      </div>
-  
-      <div className="step-content">
-        {renderStep()}
-      </div>
-  
-      <div className="navigation-buttons">
-        <button 
-          className={`previous-button ${currentStep === 1 ? 'disabled' : ''}`} 
-          onClick={handlePrevious}
-          disabled={currentStep === 1}
-        >
-          Précédent
-        </button>
-  
-        {currentStep === 1 && (
-          <button 
-            className={`next-button ${!allServicesConfigured ? 'disabled' : ''}`}
-            onClick={handleNext}
-            disabled={!allServicesConfigured}
-          >
-            Suivant
-          </button>
-        )}
-  
-        {currentStep > 1 && currentStep < STEPS.length && (
-          <button className="next-button" onClick={handleNext}>
-            Suivant
-          </button>
-        )}
-  
-        {currentStep === STEPS.length && (
-          <button className="next-button" onClick={handleFinish}>
-            Terminer
-          </button>
-        )}
-      </div>
-    </div>
-  );
+            
+            <div className="installation-guide-main-content">
+                <div className="additional-info">
+                    <h3>Comment ça marche ?</h3>
+                    <ol>
+                        <li>Sélectionnez langue pour le transcription</li>
+                        <li>Sélectionnez votre fichier audio/vidéo</li>
+                        <li>Cliquez sur "Transcrire"</li>
+                        <li>Récupérez votre transcription</li>
+                    </ol>
+                </div>
+
+                {loading ? (
+                    <LoadingSpinner />
+                ) : (
+                    transcription && (
+                        <div className="installation-guide-transcription-result">
+                            {transcription}
+                        </div>
+                    )
+                )}
+
+                <input 
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: 'none' }}
+                    accept="audio/*,video/*"
+                    onChange={handleFileUpload}
+                />
+                <div 
+                    className={getFileUploadClass()}
+                    onClick={() => fileInputRef.current.click()}
+                >
+                    {getIconForFile()}
+                    {file ? file.name : "Sélectionnez votre fichier audio/vidéo"}
+                </div>
+                
+                <button 
+                    className="installation-guide-btn" 
+                    onClick={handleTranscription}
+                    disabled={!file || loading}
+                >
+                    {loading ? 'Transcription en cours...' : 'Transcrire'}
+                </button>
+            </div>
+        </div>
+    );
 };
 
-export default InstallationGuide;
+export default TranscriptionApp;
