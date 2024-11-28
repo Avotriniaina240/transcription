@@ -26,6 +26,10 @@ body {
   line-height: 1.5;
 }
 
+
+.main-content {
+  padding: 100px 20px 20px;
+}
 .page-container {
   min-height: 100vh;
   background-color: var(--background-color);
@@ -269,7 +273,20 @@ letter-spacing: 0.3px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: 20px;
+}
+.footer-links {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-links a {
+  display: inline-block;
+  color: #64748b;
+  text-decoration: none;
+  transition: var(--transition-base);
 }
 
 /* Animations améliorées */

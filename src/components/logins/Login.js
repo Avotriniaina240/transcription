@@ -94,9 +94,7 @@ const LandingPage = () => {
               )}
             </div>
           ))}
-        </div>
-
-        <div className="services-grid">
+       
           {SERVICES.map(service => (
             <div
               key={service.id}
