@@ -1,6 +1,4 @@
-// TranscriptionData.js
 
-// Palettes de couleurs pour les intervenants
 export const speakerColors = [
     '#3498db', // Bleu
     '#2ecc71', // Vert

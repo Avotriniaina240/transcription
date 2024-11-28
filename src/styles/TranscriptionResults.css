@@ -66,6 +66,7 @@
     background-color: white;
     border-radius: 10px;
     padding: 30px;
+    font-size: 15px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   }
   
@@ -168,7 +169,7 @@
   /* Right Sidebar */
   .right-sidebar {
     width: 300px; /* Largeur fixe */
-    min-width: 300px; /* Empêche le rétrécissement */
+    min-width: 335px; /* Empêche le rétrécissement */
     background-color: #f9f9f9;
     border-left: 1px solid #e0e0e0;
     padding: 20px;
@@ -427,3 +428,250 @@
     border-radius: 5px;
     cursor: pointer;
   }
+
+  /* Section d'exportation */
+.export-section {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 12px;
+  margin: 1.5rem 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  width: 34.5%;
+}
+
+.export-section h3 {
+  color: #2d3748;
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.export-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  width: 0;
+}
+
+/* Style moderne pour le select */
+.export-select {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background-color: white;
+  color: #4a5568;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+/* Style moderne pour le bouton d'exportation */
+.export-button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(45deg, #4299e1, #667eea);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap;
+}
+
+.export-button:hover {
+  background: linear-gradient(45deg, #3182ce, #5a67d8);
+  box-shadow: 0 4px 12px rgba(66, 153, 225, 0.15);
+}
+
+/* Ajoutez ces styles à votre fichier CSS existant */
+
+.copy-notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  animation: slideIn 0.3s ease-out;
+  z-index: 1000;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.check-icon {
+  width: 20px;
+  height: 20px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.relative {
+  position: relative;
+}
+
+.title-slide {
+  text-align: center;
+}
+
+/* Style général du composant */
+.slides-generator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #f4f7fb;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 245px;
+  margin: 0 auto;
+}
+
+.generate-slides-btn {
+  display: flex;
+  align-items: center;
+  background-color: #5C6BC0;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.generate-slides-btn .icon {
+  margin-right: 10px;
+}
+
+.generate-slides-btn:hover {
+  background-color: #3f51b5;
+}
+
+/* Section d'aperçu des diapositives */
+.slides-preview {
+  margin-top: 20px;
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+h4 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.slides-list {
+  margin-bottom: 20px;
+}
+
+.slide-preview-item {
+  display: flex;
+  flex-direction: column;
+  width: 180px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.slide-preview-item strong {
+  color: #333;
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.slide-preview-item p {
+  color: #555;
+  font-size: 12px;
+  margin: 0;
+}
+
+/* Progress bar */
+.export-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.export-progress-bar {
+  width: 100%;
+  height: 8px;
+  border-radius: 4px;
+  background-color: #e0e0e0;
+}
+
+.h4cs {
+  font-size: 14px;
+  text-align: center;
+  font-family: 'roboto', sans-serif;
+}
+
+.export-slides-btn {
+  margin-top: -40px;
+  width: 180px;
+  background-color: #5C6BC0;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.export-slides-btn:hover {
+  background-color: #0097a7;
+}
+
+.slide-options {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.theme-select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.slide-settings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.slide-settings label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+

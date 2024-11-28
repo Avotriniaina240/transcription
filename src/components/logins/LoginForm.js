@@ -9,25 +9,10 @@ const LoginForm = ({ switchToRegister }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loginError, setLoginError] = useState('');
-
-  // Créer une instance de navigate pour la redirection
   const navigate = useNavigate();
-
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch('http://localhost:5000/login', {
         method: 'POST',
@@ -43,7 +28,7 @@ const LoginForm = ({ switchToRegister }) => {
         localStorage.setItem('token', data.token);
         navigate('/guide');
       } else {
-        setLoginError(data.message); // Afficher l'erreur du backend
+        setLoginError(data.message);
       }
     } catch (error) {
       setLoginError('Erreur de connexion. Veuillez réessayer plus tard.');
@@ -53,32 +38,45 @@ const LoginForm = ({ switchToRegister }) => {
   return (
     <form className="login-form" onSubmit={handleSubmit}>
       <div className="form-group">
-        <input 
-          type="email" 
-          placeholder="Email" 
-          value={email} 
-          onChange={handleEmailChange} 
-          required 
-        />
-        {loginError && loginError.includes("adresse email valide") && <p className="error-message">{loginError}</p>}
-      </div>
-      <div className="form-group password-container">
         <input
-          type={showPassword ? "text" : "password"}
-          placeholder="Mot de passe"
-          value={password}
-          onChange={handlePasswordChange}
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           required
         />
-        <FontAwesomeIcon
-          icon={showPassword ? faEyeSlash : faEye}
-          className="password-toggle-icon"
-          onClick={togglePasswordVisibility}
-        />
-        {loginError && loginError.includes("mot de passe") && <p className="error-message">{loginError}</p>}
+        {loginError && loginError.includes("adresse email valide") && 
+          <p className="error-message">{loginError}</p>
+        }
       </div>
-      {loginError && !loginError.includes("adresse email valide") && !loginError.includes("mot de passe") && <p className="error-message">{loginError}</p>}
+
+      <div className="form-group">
+        <div className="password-input-container">
+          <input
+            type={showPassword ? "text" : "password"}
+            placeholder="Mot de passe"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <FontAwesomeIcon
+            icon={showPassword ? faEyeSlash : faEye}
+            className="password-toggle-icon"
+            onClick={() => setShowPassword(!showPassword)}
+          />
+        </div>
+        {loginError && loginError.includes("mot de passe") && 
+          <p className="error-message">{loginError}</p>
+        }
+      </div>
+
+      {loginError && !loginError.includes("adresse email valide") && 
+       !loginError.includes("mot de passe") && 
+        <p className="error-message">{loginError}</p>
+      }
+
       <button type="submit" className="submit-button">Se connecter</button>
+      
       <p className="switch-auth">
         Pas de compte ? <span onClick={switchToRegister}>Inscrivez-vous</span>
       </p>

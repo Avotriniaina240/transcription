@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import { Upload, Music, Video } from 'lucide-react'; // Ajout des icônes Music et Video
+import { Upload, Music, Video } from 'lucide-react';
 import '../../styles/AutomationGuide.css';
 
-const TranscriptionApp = () => {
+const TranscriptionApp = () => { 
     const [file, setFile] = useState(null);
     const [transcription, setTranscription] = useState('');
     const [language, setLanguage] = useState('fr');
