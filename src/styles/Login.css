@@ -84,6 +84,21 @@ body {
   transform: translateY(-2px);
 }
 
+@media screen and (max-width: 424px) {
+  .login-button {
+    padding: 0.35rem 1rem;
+  }
+
+  .logo {
+    font-size: 1.1rem;
+  }
+}
+
+.hero-section{
+  align-items: center;
+  text-align: center;
+}
+
 /* Grilles améliorées */
 .steps-grid, .services-grid {
   display: grid;

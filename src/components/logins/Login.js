@@ -47,8 +47,23 @@ const SERVICES = [
     description: 'Nous utilisons n8n pour automatiser le flux de transcription et la gestion des diapositives.',
     image: '6.jpg',
     icon: 'icon-dropbox'
+  },
+  {
+    id: 'service4',
+    title: 'Automatisation avec n8n',
+    description: 'n8n vous permet de créer des flux automatisés sans code pour gérer efficacement des divers y tâches.',
+    image: '7.jpg',
+    icon: 'icon-n8n'
+  },
+  {
+    id: 'service5',
+    title: 'tâches automatisées',
+    description: 'L’automatisation avancée avec n8n facilite la gestion des tâches répétitives.',
+    image: '8.png',
+    icon: 'icon-automation'
   }
 ];
+
 
 const LandingPage = () => {
   const [showLogin, setShowLogin] = useState(false);
