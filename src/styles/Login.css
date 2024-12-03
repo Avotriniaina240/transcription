@@ -13,7 +13,6 @@
 }
 
 
-
 /* Reset et Base */
 * {
   margin: 0;
@@ -110,19 +109,24 @@ body {
 
 .step-card h3, .service-card h3 {
   margin-top: 20px;
-  text-align: center;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
 }
 
 
 .step-card p {
   margin-top: 20px;
-  padding: 0 15px;
   line-height: 1.5;
+  font-size: 1rem;
+  margin-top: 20px;
+  font-size: 14px;
 }
 
 .service-card p {
   margin-top: 20px;
+  line-height: 1.5;
+  font-size: 1rem;
+  margin-top: 8px;
+  font-size: 14px;
 }
 
 .classe-p {
@@ -140,48 +144,63 @@ body {
   background-color: var(--card-background);
   box-shadow: var(--shadow-md);
   transition: var(--transition-base);
-  overflow: hidden;
-  position: relative;
 }
 
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.3s ease, filter 0.3s ease;
+}
 
-.step-card img, .service-card img {
+.card-background img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
 }
 
-.step-card:hover img, .service-card:hover img {
-  transform: scale(1.1);
-  filter: blur(0.5px) brightness(0.7);
+.step-card.hovered .card-background,
+.service-card.hovered .card-background {
   opacity: 1;
 }
 
-.step-card::after, .service-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0);
-  transition: background-color 0.3s ease;
-}
-
-
-.step-card:hover::after, .service-card:hover::after {
-  background-color: rgba(0, 0, 0, 0.3);
+.step-card.hovered .card-background img,
+.service-card.hovered .card-background img {
+  transform: scale(1.1);
+  filter: blur(3px) brightness(0.6);
 }
 
 .card-content {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: relative;
+  z-index: 2;
+  color: var(--text-primary);
   padding: 1.5rem;
-  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: transparent;
+  transition: color 0.3s ease;
+}
+
+.step-card.hovered .card-content,
+.service-card.hovered .card-content {
   color: white;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+}
+
+.service-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.service-header i {
+  font-size: 1.5rem;
 }
 
 /* Modal moderne */

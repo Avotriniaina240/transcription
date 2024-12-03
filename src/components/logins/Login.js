@@ -58,12 +58,11 @@ const SERVICES = [
   {
     id: 'service5',
     title: 'tâches automatisées',
-    description: 'L’automatisation avancée avec n8n facilite la gestion des tâches répétitives.',
+    description: 'automatisation avancée avec n8n facilite la gestion des tâches répétitives.',
     image: '8.png',
     icon: 'icon-automation'
   }
 ];
-
 
 const LandingPage = () => {
   const [showLogin, setShowLogin] = useState(false);
@@ -95,39 +94,37 @@ const LandingPage = () => {
           {STEPS.map(step => (
             <div
               key={step.id}
-              className="step-card"
+              className={`step-card ${hoveredCard === step.id ? 'hovered' : ''}`}
               onMouseEnter={() => setHoveredCard(step.id)}
               onMouseLeave={() => setHoveredCard(null)}
             >
-              {hoveredCard === step.id ? (
+              <div className="card-background">
                 <img src={step.image} alt={step.title} loading="lazy" />
-              ) : (
-                <>
-                  <h3>{step.title}</h3>
-                  <p>{step.description}</p>
-                </>
-              )}
+              </div>
+              <div className="card-content">
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+              </div>
             </div>
           ))}
        
           {SERVICES.map(service => (
             <div
               key={service.id}
-              className="service-card"
+              className={`service-card ${hoveredCard === service.id ? 'hovered' : ''}`}
               onMouseEnter={() => setHoveredCard(service.id)}
               onMouseLeave={() => setHoveredCard(null)}
             >
-              {hoveredCard === service.id ? (
+              <div className="card-background">
                 <img src={service.image} alt={service.title} loading="lazy" />
-              ) : (
-                <>
-                  <div className="service-header">
-                    <i className={service.icon}></i>
-                    <h3>{service.title}</h3>
-                  </div>
-                  <p className='classe-p'>{service.description}</p>
-                </>
-              )}
+              </div>
+              <div className="card-content">
+                <div className="service-header">
+                  <i className={service.icon}></i>
+                  <h3>{service.title}</h3>
+                </div>
+                <p className='classe-p'>{service.description}</p>
+              </div>
             </div>
           ))}
         </div>
